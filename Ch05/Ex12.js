@@ -17,4 +17,4 @@ function multiply()
 console.log(power(2));
 console.log(power(2, 3));
 console.log(multiply(1, 2, 3));
-console.log(multiply(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+console.log(multiply(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));d
