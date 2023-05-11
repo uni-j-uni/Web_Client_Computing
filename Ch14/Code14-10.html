@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Text : 코드 14-10</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            // 웹 페이지를 모두 불러오면
+            $(document).ready(function() {
+                // img 태그에
+                $('img').each(function (index, element) {
+                    // src 속성을 조작
+                    $(this).attr('src', 'http://placehold.it/' + (index + 1) * 100 + 'x100');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <img />
+        <img />
+        <img />
+    </body>
+</html>
