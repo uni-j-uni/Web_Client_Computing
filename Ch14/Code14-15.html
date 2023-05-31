@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Event</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            // 웹 페이지를 모두 불러오면
+            $(document).ready(function() {
+                const handler = function(event) {
+                    // h1 태그에 이벤트를 연결하여 생성해서 body 태그에 추가
+                    $('<h1></h1>')
+                    .text($(this).text())
+                    .on('click', handler)
+                    .appendTo('body');
+                }
+                // body 태그에 h1 태그의 click 이벤트 직접 연결
+                $('h1').on('click', handler);
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Header-1</h1>
+        <h1>Header-2</h1>
+        <h1>Header-3</h1>
+    </body>
+</html>

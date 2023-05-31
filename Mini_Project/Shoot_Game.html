@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shooting Game</title>
+        <style>
+            canvas {
+                border: 3px solid rgb(13, 97, 0);   /* 캔버스 경계선 그리기 */
+                background-color: #c0f089;          /* 캔버스 배경색 지정 */
+            }
+        </style>
+        <script>
+            let context;                   // 컨텍스트 객체
+            let velocity;                  // 사용자가 입력한 공의 초기속도
+            let angle;                     // 사용자가 입력한 공의 초기각도
+            let ball_V;                    // 공의 현재 속도
+            let ball_Vx;                   // 공의 현재 x방향 속도
+            let ball_Vy;                   // 공의 현재 y방향 속도
+            let ball_X;                    // 공의 현재 x방향 위치
+            let ball_Y;                    // 공의 현재 y방향 위치
+            let ball_Radius = 20;          // 공의 반지름
+            let score = 0;                 // 점수
+            let backImage = new Image();
+            backImage.src = "Images/net.png";   // 골대 이미지 설정
+            let timer;                          // 타이머 객체 변수
+
+            // 전체 화면 그리기
+            function draw() {
+                context.clearRect(0, 0, 500, 300);   // 화면 지우기
+                drawBall();         // 공 새로 그리기
+                drawBackground();   // 골대 새로 그리기
+            }
+            function drawBackground() {
+                context.drawImage(backImage, 450, 70, 50, 150);
+            }
+            // 공 그리기
+            function drawBall() {
+                let gradient = context.createRadialGradient(ball_X - 10, ball_Y - 10, ball_Radius / 3, ball_X, ball_Y, ball_Radius + 10);
+                gradient.addColorStop(0, "white");
+                gradient.addColorStop(1, "black");
+                context.fillStyle = gradient;
+                context.beginPath();
+                context.arc(ball_X, ball_Y, ball_Radius, 0, 2.0 * Math.PI, true);
+                context.fill();
+            }
+            // 초기화
+            function init() {
+                ball_X = 20;
+                ball_Y = 280;
+                context = document.getElementById('canvas').getContext('2d');
+                draw();
+            }
+            // 공의 현재 속도와 위치를 계산하여 업데이트
+            function calculate() {
+                ball_Vy = ball_Vy + 1.98;
+                ball_X = ball_X + ball_Vx;
+                ball_Y = ball_Y + ball_Vy;
+                // 공이 골대에 맞으면 점수 추가
+                if ((ball_X >= 470) && (ball_X <= 500) && (ball_Y >= 90) && (ball_Y <= 220)) {
+                    score++;
+                    document.getElementById("score").innerHTML = "<br>점수 : " + score;
+                    clearInterval(timer);
+                }
+                // 공이 운동장 경계를 벗어난 경우 멈춤
+                if (ball_Y >= 320 || ball_Y < -20) {
+                    clearInterval(timer);
+                }
+                draw();   // 업데이트 된 정보대로 다시 그리기
+            }
+            // 슈팅하기
+            function shoot() {
+                init();
+                velocity = Number(document.getElementById("velocity").value);
+                angle = Number(document.getElementById("angle").value);
+                let angle_R = angle * Math.PI / 180;
+
+                ball_Vx = velocity * Math.cos(angle_R);
+                ball_Vy = -velocity * Math.sin(angle_R);
+
+                draw();
+                timer = setInterval(calculate, 100);
+                return false;
+            }
+            // 공 제자리에 놓기
+            function ready() {
+                ball_X = 20;
+                ball_Y = 280;
+                drawBall();
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <canvas id="canvas" width="500" height="300"></canvas>
+        <div id="control"> <br>
+            속도<input id="velocity" value="0" type="number" min="0" max="100" step="1" />
+            각도<input id="angle" value="0" type="number" min="0" max="90" step="1" />
+            <div id="score"><br> 점수 : 0</div>
+            <br> <button onclick="ready()"> 공 제자리</button>
+            <button onclick="shoot()"> 슈웃~~! </button>
+        </div>
+    </body>
+</html>

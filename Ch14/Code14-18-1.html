@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Animate</title>
+        <style>
+            .box {
+                /* 크기 */
+                width : 100px; height : 100px;
+                /* 색상 */
+                background-color : red;
+                /* 위치 */
+                position: absolute;
+                left: 10px; top: 10px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            // 웹 페이지를 모두 불러오면
+            $(document).ready(function() {
+                let move = false;
+                // .box 태그를 클릭해서
+                $('.box').click(function() {
+                    if (move == false) {
+                    // 1초 동안 left를 1000픽셀로 변경
+                    $(this).animate({
+                        left: 1000, top: 300
+                    }, 2000);
+                    move = true;
+                }
+                else {
+                // 1초 동안 left를 1000픽셀로 변경
+                    $(this).animate({
+                        left: 10, top: 10
+                    }, 2000);
+                    move = false;
+                }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="box"></div>
+    </body>
+</html>
